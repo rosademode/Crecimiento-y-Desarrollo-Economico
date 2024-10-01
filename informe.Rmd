@@ -1,0 +1,1345 @@
+---
+title: "**Milagro Neozelandés**"
+output:
+  pdf_document:
+    keep_tex: true
+    toc: false  # Desactivar la tabla de contenido automática
+header-includes:
+  - \usepackage{graphicx}
+  - \usepackage{fancyhdr}
+  - \usepackage{mdframed}
+  - \pagestyle{fancy}
+  - \fancyhead{}
+  - \fancyhead[L]{\includegraphics[width=3cm]{logo.jpg}}
+  - \fancyhead[R]{\hspace{0.5cm} Universidad Diego Portales \\ Facultad de Administración y Economía}
+  - \fancypagestyle{plain}{
+      \fancyhead{}
+      \fancyhead[L]{\includegraphics[width=3cm]{logo.jpg}}
+      \fancyhead[R]{\hspace{0.5 cm} Universidad Diego Portales \\ Facultad de Administración y Economía}}
+fontsize: 12pt
+geometry: margin=1in 
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{=tex}
+\maketitle
+\vspace{4cm}
+\begin{center}
+\large \textbf{Estudiantes:} \\
+\vspace{0.5cm}
+\large Maximiliano Basoalto \\
+\large Dania Bustamante \\
+\large Maite Campos \\
+\large Rosana Cardona \\
+\large José Casanova \\
+\vfill
+\large \textbf{Curso}: Crecimiento y Desarrollo \\
+\large \textbf{Profesor}: Fernando Medina \\
+\large 5 julio 2024 \\
+\vspace{1cm}
+\end{center}
+\newpage
+\tableofcontents
+\newpage
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+library(readxl)
+datos <- read_excel("Nueva zelanda pib.xlsx")
+library(ggplot2)
+datos$Año <- as.numeric(as.character(datos$Año))
+library(scales)
+library(tidyr)
+library(readxl)
+library(dplyr)
+deuda_gob <- read_excel("deuda gob.xls")
+```
+
+# Introducción
+
+Este informe presenta un análisis de la economía de Nueva Zelanda,
+abarcando diversos aspectos fundamentales para comprender el crecimiento
+y desarrollo economico del país. A través de este estudio, se pretende
+ofrecer una visión detallada de los principales indicadores económicos,
+las políticas implementadas y sus impactos a lo largo del tiempo.
+
+El análisis se divide en:
+
+-   Descripción del país y su economía: Se destacan los principales
+    sectores económicos, incluyendo agricultura, manufactura y
+    servicios, proporcionando un contexto del panorama actual de la
+    economía del país.
+
+-   Estudio del PIB: Se realiza un análisis del Producto Interno Bruto
+    (PIB) de Nueva Zelanda. Se desglosan las partidas de gasto del PIB y
+    se analiza la evolución durante los principales periodos de crisis.
+
+-   Tasa de desempleo e inflación: Se examinan la evolución mensual de
+    la tasa de desempleo y la inflación, proporcionando un marco para
+    entender la estabilidad y los desafíos económicos enfrentados por el
+    país.
+
+-   Políticas económicas implementadas durante la última crisis: Se
+    examinan las políticas económicas adoptadas durante la última
+    crisis, especialmente la pandemia de COVID-19, evaluando su
+    efectividad y resultados.
+
+Este informe pretende no solo describir el estado actual de la economía
+de Nueva Zelanda, sino también proporcionar un análisis crítico de sus
+políticas económicas y su capacidad para enfrentar crisis.
+
+# Análisis
+
+## Descripción del país y su economía
+
+Nueva Zelanda, es conocido por su paisaje diverso y su rica cultura,
+situado en el suroeste del Océano Pacífico. Desde mediados del siglo XX,
+la economía de Nueva Zelanda ha experimentado transformaciones
+significativas. Originalmente dependiente de la agricultura y de las
+exportaciones al Reino Unido, su principal mercado, Nueva Zelanda ha
+diversificado su economía en respuesta a los cambios en el comercio
+internacional y a las crisis económicas. A partir de los años 1980, se
+implementaron reformas estructurales que liberalizaron la economía y
+promovieron la competitividad en los mercados globales.
+
+Los principales sectores económicos del país son:
+
+-   Agricultura: Incluye la producción de productos lácteos, carne,
+    lana, frutas y vino.
+
+-   Manufactura: Producción de alimentos procesados, productos químicos,
+    maquinaria y equipos.
+
+-   Servicios: Comercio minorista, transporte, finanzas, educación,
+    salud y servicios profesionales. Este sector representa la mayor
+    parte del PIB de Nueva Zelanda, reflejando una economía moderna y
+    diversificada.
+
+Actualmente, Nueva Zelanda posee una economía de alto ingreso
+caracterizada por su estabilidad política y económica. La economía está
+altamente integrada en los mercados globales y se beneficia de tratados
+de libre comercio con varias naciones. El país ha demostrado resiliencia
+ante crisis económicas globales, incluyendo la reciente pandemia de
+COVID-19, gracias a su enfoque en políticas fiscales y monetarias
+prudentes y un sistema de bienestar social robusto.
+
+## Estudio del PIB
+
+### Análisis del PIB
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=5, fig.align='center'}
+# Crea el gráfico con los ajustes solicitados
+ggplot(datos, aes(x = Año, y = `PIB US a precio actual`)) +
+  geom_line() +   # Para crear una línea que conecte los puntos
+  geom_point() +  # Para añadir puntos en los datos
+  labs(title = "PIB Real de Nueva Zelanda", 
+       x = "Año", 
+       y = "PIB (US$)") +
+  scale_x_continuous(breaks = seq(1980, 2020, by = 10)) +  # Muestra solo años de 10 en 10 desde 1980 a 2020
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal()  # Tema minimalista para una mejor visualización
+```
+
+-   ***PIB Nominal y Real:*** El Producto Interno Bruto (PIB) de Nueva
+    Zelanda ha mostrado diferentes patrones de crecimiento a lo largo de
+    las décadas. Durante los años 1950 y 1960, Nueva Zelanda disfrutó de
+    un crecimiento económico robusto, con un PIB per cápita superior al
+    promedio de la OCDE. Sin embargo, durante los años 1970 y 1980, el
+    crecimiento se desaceleró debido a una serie de factores externos e
+    internos, incluyendo la crisis del petróleo y problemas
+    estructurales en la economía.
+
+-   ***Crecimiento del PIB:*** Desde 1985, Nueva Zelanda ha
+    experimentado varios ciclos económicos. En la segunda mitad de los
+    años 80, el crecimiento del PIB mostró variaciones, con un fuerte
+    crecimiento del 4.79% en 1984 y fluctuaciones menores en los años
+    siguientes. La crisis financiera global de 2008 tuvo un impacto
+    significativo, con un decrecimiento del PIB del 1.21% en 2008. La
+    recuperación fue gradual, y se logró un crecimiento significativo
+    del 5.17% en 2021, impulsado por la recuperación post-pandemia de
+    COVID-19. En general, el PIB ha mostrado un crecimiento sostenido
+    con algunas fluctuaciones debido a crisis económicas globales y
+    políticas nacionales.
+
+-   ***Partidas de gasto como porcentaje del PIB*** En periodos de
+    crisis, el consumo, gasto del gobierno, inversión, exportaciones e
+    importaciones fluctuaron considerablemente, reflejando la
+    inestabilidad económica y los esfuerzos del gobierno por manejar la
+    demanda interna.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=15, fig.height=5, fig.align='center'}
+demanda_agregada <- read_excel("demanda agregada.xlsx")
+demanda_agregada$Años <- as.numeric(as.character(demanda_agregada$Años))
+
+# Reorganiza los datos al formato largo
+demanda_long <- demanda_agregada %>%
+  pivot_longer(cols = c(Consumo, Exportaciones, Importaciones), 
+               names_to = "Variable", 
+               values_to = "Valor")
+
+# Crea el gráfico con facetas
+ggplot(demanda_long, aes(x = Años, y = Valor)) +
+  geom_line(color = "black", size = 1) +  # Para crear una línea negra que conecte los puntos
+  labs(
+    title = "Demanda Agregada", 
+    x = "Años", 
+    y = "US Millones"
+  ) +
+  scale_x_continuous(
+    breaks = seq(min(demanda_long$Años, na.rm = TRUE), max(demanda_long$Años, na.rm = TRUE), by = 20)
+  ) +  # Muestra años de 10 en 10
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12)  # Ajusta el tamaño del texto de los ejes
+  ) +
+  facet_wrap(~ Variable, scales = "free_y")  # Crea facetas para cada variable con escalas libres en el eje Y
+```
+
+El gasto del gobierno como porcentaje del PIB ha variado
+significativamente desde 1985. En la segunda mitad de los años 80, el
+gasto público fue alto, alcanzando un 41.37% del PIB en 1985.
+Posteriormente, se observó una reducción y estabilización en torno al
+30% durante las décadas siguientes. Durante la pandemia de COVID-19,
+hubo un aumento notable en el gasto público, alcanzando el 36.42% del
+PIB en 2020, reflejando las medidas de estímulo económico adoptadas por
+el gobierno.
+
+El análisis de las partidas de gasto como porcentaje del PIB revela la
+dinámica y la resiliencia de la economía de Nueva Zelanda. Las
+fluctuaciones en el consumo, el gasto gubernamental, la inversión, las
+exportaciones y las importaciones reflejan las respuestas a las
+condiciones económicas internas y externas. La capacidad del gobierno
+para aumentar el gasto en tiempos de crisis ha sido crucial para
+estabilizar la economía, mientras que el consumo privado y las
+exportaciones han sido componentes clave del crecimiento económico
+sostenido del país.
+
+### Principales periodos de crisis
+
+Para analizar la evolución del PIB en Nueva Zelanda, es importante
+identificar los principales períodos de análisis y observar cómo ha
+variado el PIB en esos períodos. Aquí se destacan algunos períodos clave
+y sus respectivas evoluciones.
+
+#### ***Evolución del PIB Trimestral en los Principales Períodos de Análisis***
+
+Los datos del PIB muestran una significativa volatilidad durante los
+periodos de crisis, como la crisis del petróleo en los años 1970. Estas
+crisis llevaron a contracciones en el PIB debido a la disminución de la
+demanda internacional de exportaciones neozelandesas y aumentos en los
+costos de importación.
+
+Durante las crisis económicas de la década de 1970, especialmente la
+crisis del petróleo, el PIB real mostró volatilidad y una desaceleración
+significativa. La economía se contrajo debido a los choques externos y
+la disminución de la demanda de exportaciones.
+
+-   **Recesión de Principios de los Años 90 (1990-1993)** Durante este
+    período, Nueva Zelanda enfrentó una recesión económica que impactó
+    significativamente el PIB. El desempleo alcanzó niveles altos y el
+    crecimiento del PIB fue negativo en algunos trimestres.
+-   **Inicio de la Recesión:** El PIB comenzó a decrecer a finales de
+    1990 y continuó en negativo hasta principios de 1991.
+-   **Recuperación Temprana:** A partir de 1992, el PIB real trimestral
+    comenzó a mostrar signos de recuperación, aunque de manera lenta.
+
+***Crisis Financiera Asiática (1997-1998)*** La crisis financiera
+asiática tuvo un impacto indirecto en la economía neozelandesa,
+especialmente en sus exportaciones.
+
+-   **Impacto Inicial:** El PIB trimestral mostró una desaceleración en
+    1997 y una caída en algunos trimestres de 1998.
+
+-   **Recuperación Rápida:** A finales de 1998 y principios de 1999, el
+    PIB comenzó a recuperarse rápidamente, mostrando una fuerte
+    resiliencia.
+
+***Crisis Financiera Global (2008-2009)*** Esta crisis tuvo un impacto
+significativo en la economía global y Nueva Zelanda no fue una
+excepción.
+
+-   **Caída Pronunciada:** El PIB trimestral desestacionalizado mostró
+    una caída significativa a finales de 2008 y continuó en negativo en
+    varios trimestres de 2009.
+-   **Recuperación Gradual:** La recuperación comenzó en 2010, con un
+    aumento gradual en el PIB real trimestral a lo largo de los años
+    siguientes.
+
+***Pandemia de COVID-19 (2020-2021)*** La pandemia tuvo un impacto
+drástico e inmediato en la economía mundial.
+
+-   **Impacto Inmediato:** En el primer y segundo trimestre de 2020, el
+    PIB real trimestral desestacionalizado mostró caídas drásticas
+    debido a las medidas de confinamiento y la interrupción de la
+    actividad económica.
+-   **Recuperación Post-Pandemia:** A partir del tercer trimestre de
+    2020, el PIB comenzó a recuperarse a medida que se levantaron las
+    restricciones y se implementaron medidas de estímulo económico. Para
+    2021, el PIB mostró un crecimiento notable.
+
+Finalmente, observamos que, Nueva zalanda ha tenido en el transcursos de
+los años:
+
+-   **Variabilidad y Resiliencia:** El PIB trimestral de Nueva Zelanda
+    ha mostrado una variabilidad significativa en respuesta a crisis
+    económicas globales, pero también ha demostrado una notable
+    capacidad de recuperación.
+-   **Ciclos Económicos:** Los ciclos de recesión y recuperación son
+    evidentes, con períodos de contracción económica seguidos de fases
+    de crecimiento impulsadas por políticas fiscales y monetarias
+    adecuadas.
+-   **Desempeño a Largo Plazo:** A lo largo de las décadas, el PIB
+    trimestral desestacionalizado ha tendido a crecer, reflejando una
+    economía en expansión a pesar de los desafíos temporales.
+
+#### Principales actividades productivas como porcentaje del PIB
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=5, fig.align='center'}
+por_cont <- read_excel("por cont.xlsx")
+por_cont$año <- as.numeric(as.character(por_cont$año))
+
+por_cont_long <- por_cont %>%
+  pivot_longer(cols = c(`Industria primaria`, Bienes, Servicio), 
+               names_to = "Variable", 
+               values_to = "Valor")
+
+# Crea el gráfico de barras con los ajustes solicitados
+ggplot(por_cont_long, aes(x = año, y = Valor, fill = Variable)) +
+  geom_bar(stat = "identity", position = "dodge") +  # Crea barras separadas por variable
+  labs(title = "Sectores Productivos", 
+       x = "Año", 
+       y = "% del PIB", 
+       fill = "Sector") +  # Etiqueta de la leyenda
+  scale_x_continuous(breaks = seq(min(por_cont$año), max(por_cont$año), by = 10)) +  # Muestra años de 10 en 10
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12),  # Ajusta el tamaño del texto de los ejes
+    legend.title = element_text(size = 14),  # Ajusta el tamaño del título de la leyenda
+    legend.text = element_text(size = 12)  # Ajusta el tamaño del texto de la leyenda
+  )
+```
+
+En la década de 1950, la agricultura constituía una gran parte del PIB
+de Nueva Zelanda. Sin embargo, la proporción de la agricultura en el PIB
+ha disminuido con el tiempo, a medida que la economía se ha
+diversificado hacia los servicios y la manufactura. Este cambio
+estructural ha sido clave para la resiliencia económica del país frente
+a choques externos.
+
+La agricultura y la producción primaria representaban una gran parte del
+PIB en la década de 1950, pero su proporción disminuyó con el tiempo a
+medida que la economía se diversificaba hacia los servicios y la
+manufactura.
+
+Las principales actividades productivas, incluyendo la agricultura y la
+minería, vieron reducciones en su participación en el PIB durante las
+crisis económicas. Esto se debió principalmente a la caída de los
+precios internacionales y la disminución de la demanda.
+
+Las crisis afectaron gravemente a sectores clave como la minería y la
+agricultura, que vieron una disminución en su contribución al PIB debido
+a las caídas en los precios internacionales y la menor demanda.
+
+-   Agricultura como Porcentaje del PIB
+
+La agricultura ha sido históricamente uno de los pilares de la economía
+neozelandesa, aproximadamente 15-20% del PIB. Este sector incluye la
+producción de productos lácteos, carne, lana, frutas y vino. La
+agricultura representaba una parte significativa del PIB, aunque su
+proporción ha disminuido gradualmente debido a la diversificación
+económica. En años recientes, aunque la proporción de la agricultura en
+el PIB ha disminuido, sigue siendo un sector importante debido a las
+exportaciones agrícolas.
+
+Por otra parte, la minería, aunque no tan predominante como la
+agricultura, representaba alrededor del 5-7% del PIB, ha contribuido al
+PIB de Nueva Zelanda a través de la extracción de recursos naturales
+como carbón, oro y minerales. La minería tuvo una contribución modesta
+pero significativa al PIB. En las últimas décadas, la proporción de la
+minería en el PIB ha variado, dependiendo de los precios internacionales
+de los minerales y la inversión en exploración y extracción.
+
+-   Manufactura como Porcentaje del PIB
+
+El sector manufacturero incluye la producción de alimentos procesados,
+productos químicos, maquinaria y equipos. La manufactura representaba
+una parte considerable del PIB, contribuía con aproximadamente el 20-25%
+del PIB, impulsada por la producción de bienes para el mercado interno y
+para la exportación. La contribución de la manufactura al PIB ha visto
+una ligera disminución debido al aumento de la terciarización de la
+economía y la competencia internacional.
+
+-   Servicios como Porcentaje del PIB El sector servicios es el más
+    grande y diverso, abarcando comercio minorista, transporte,
+    finanzas, educación, salud y servicios profesionales. Presenta
+    alrededor del 40-45% del PIB, comenzando a ganar importancia con la
+    expansión de los servicios financieros y profesionales. Los
+    servicios comenzaron a crecer rápidamente, superando a otros
+    sectores en términos de su contribución al PIB. En la actualidad,
+    los servicios representan la mayor parte del PIB de Nueva Zelanda,
+    reflejando una economía moderna y diversificada.
+
+#### Análisis pick to trough
+
+El análisis de los ciclos económicos en Nueva Zelanda revela que las
+fases de recesión y recuperación han sido marcadas. Los periodos de auge
+económico fueron seguidos por recesiones profundas, y la recuperación a
+menudo fue lenta y prolongada. La economía neozelandesa experimentó
+varios ciclos de auge y recesión, con periodos de recuperación lenta
+seguidos de nuevas contracciones, especialmente notables durante las
+crisis de los años 1970.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=5, fig.align='center'}
+# Crea el gráfico con los ajustes solicitados
+ggplot(datos, aes(x = Año, y =`Crecimiento del pib`)) +
+  geom_line(color = "black", size = 1) +   # Para crear una línea azul que conecte los puntos
+  geom_point(color = "blue", size = 2) +  # Para añadir puntos rojos en los datos
+  labs(title = "Crecimiento del PIB", 
+       x = "Año", 
+       y = "% ") +
+  scale_x_continuous(breaks = seq(1980, 2020, by = 5)) +  # Muestra solo años de 10 en 10 desde 1980 a 2020
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12)  # Ajusta el tamaño del texto de los ejes
+  )
+```
+
+***Máximo crecimiento del PIB:***
+
+-   1993: Crecimiento del PIB del 6.39%
+-   1999: Crecimiento del PIB del 5.38%
+-   2021: Crecimiento del PIB del 5.17%
+
+***Valle (Mayor Contracción del PIB):***
+
+-   1991: Crecimiento del PIB del -1.09%
+-   2008: Crecimiento del PIB del -1.21%
+-   2020: Crecimiento del PIB del -0.65%
+
+Estos datos reflejan cómo la economía neozelandesa ha experimentado
+ciclos de expansión y contracción, influenciados por eventos globales
+como la crisis financiera de 2008 y la pandemia de COVID-19 en 2020.
+
+## Tasa de desempleo
+
+La tasa de desempleo en Nueva Zelanda comenzó a aumentar
+significativamente durante las crisis económicas de los años 1970 y
+1980. La pérdida de empleos en sectores clave como la manufactura y la
+agricultura contribuyó a este aumento, reflejando la incapacidad del
+mercado laboral para absorber el excedente de trabajadores en un
+contexto de desaceleración económica. La tasa de desempleo en Nueva
+Zelanda ha mostrado fluctuaciones a lo largo del tiempo, siendo sensible
+a las condiciones económicas globales y locales. Por otra parte,mostrado
+una tendencia fluctuante desde 1985. Sin embargo, la recesión de
+principios de los 90 llevó la tasa de desempleo a un máximo de 10.61% en
+1991. Desde entonces, ha habido una tendencia general a la baja, con
+algunas fluctuaciones durante la crisis financiera de 2008 y la pandemia
+de COVID-19. En 2021, la tasa de desempleo se redujo a 3.78%, reflejando
+una recuperación en el mercado laboral.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=5, fig.align='center'}
+
+# Crea el gráfico con los ajustes solicitados
+ggplot(datos, aes(x = Año, y = Desempleo)) +
+  geom_line(color = "black", size = 1) +   # Para crear una línea azul que conecte los puntos
+  geom_point(color = "blue", size = 2) +  # Para añadir puntos rojos en los datos
+  labs(title = "Desempleo", 
+       x = "Año", 
+       y = "% ") +
+  scale_x_continuous(breaks = seq(1988, 2020, by = 10)) +  # Muestra solo años de 10 en 10 desde 1980 a 2020
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12)  # Ajusta el tamaño del texto de los ejes
+  )
+```
+
+La tasa de desempleo es un indicador crucial para evaluar la salud del
+mercado laboral. Durante los períodos de recesión económica, la tasa de
+desempleo tiende a aumentar.
+
+***Pico de Desempleo:***
+
+-   1991: 10.61%
+-   1998: 7.72%
+-   2009: 6.56%
+-   2020: 4.60% (aumento debido a la pandemia)
+
+***Valle de Desempleo:***
+
+-   2007: 3.66%
+
+-   2019: 4.11%
+
+-   2022: 3.30% (recuperación post-pandemia)
+
+Durante la pandemia de COVID-19, la tasa de desempleo aumentó debido a
+las restricciones y la disminución de la actividad económica, pero se ha
+recuperado gradualmente con la implementación de políticas de apoyo al
+empleo.
+
+## Inflación
+
+La inflación fue un problema significativo en Nueva Zelanda durante las
+décadas de 1970 y 1980, alcanzando picos elevados debido a las crisis
+del petróleo y las políticas fiscales expansivas. La alta inflación
+erosiona el poder adquisitivo y fue una preocupación central para las
+políticas monetarias posteriores, que buscaron estabilizar los precios
+mediante el control de la oferta monetaria y las tasas de interés.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=5, fig.align='center'}
+ggplot(datos, aes(x = Año, y = Inflacion)) +
+  geom_line(color = "black", size = 1) +   # Para crear una línea azul que conecte los puntos
+  geom_point(color = "blue", size = 2) +  # Para añadir puntos rojos en los datos
+  labs(title = "IPC", 
+       x = "Año", 
+       y = "% ") +
+  scale_x_continuous(breaks = seq(1980, 2020, by = 5)) +  # Muestra solo años de 10 en 10 desde 1980 a 2020
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12)  # Ajusta el tamaño del texto de los ejes
+  )
+```
+
+La inflación en Nueva Zelanda ha sido relativamente baja y estable en
+las últimas décadas, gracias a la política monetaria prudente del Banco
+de Reserva de Nueva Zelanda. Sin embargo, durante la pandemia de
+COVID-19, la inflación se vio afectada por las interrupciones en la
+cadena de suministro y los cambios en la demanda de bienes y servicios
+
+## PIB, desempleo e inflación
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=15, fig.height=4}
+
+
+datos_long_2 <- datos %>%
+  pivot_longer(cols = c(`Crecimiento del pib`, Desempleo, Inflacion), 
+               names_to = "Variable", 
+               values_to = "Valor")
+
+# Crea el gráfico con los ajustes solicitados
+ggplot(datos_long_2, aes(x = Año, y = Valor, color = Variable)) +
+  geom_line(size = 1) +   # Para crear una línea que conecte los puntos
+  geom_point(size = 2) +  # Para añadir puntos en los datos
+  labs(title = "Indicadores Económicos", 
+       x = "Año", 
+       y = "%", 
+       color = "Indicador") +  # Etiqueta de la leyenda
+  scale_x_continuous(breaks = seq(1980, 2020, by = 10)) +  # Muestra solo años de 10 en 10 desde 1980 a 2020
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12),  # Ajusta el tamaño del texto de los ejes
+    legend.title = element_text(size = 14),  # Ajusta el tamaño del título de la leyenda
+    legend.text = element_text(size = 12)  # Ajusta el tamaño del texto de la leyenda
+  )
+```
+
+## Intercambio comercial
+
+```{r  echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=5, fig.align='center'}
+balanza_de_pago <- read_excel("balanza de pago.xls")
+
+ggplot(balanza_de_pago, aes(x = año, y = bp)) +
+  geom_line(color = "black", size = 1) +   # Para crear una línea azul que conecte los puntos
+  geom_point(color = "blue", size = 2) +  # Para añadir puntos rojos en los datos
+  labs(title = "Balanza de Pagos", 
+       x = "Año", 
+       y = "US ") +
+  scale_x_continuous(breaks = seq(1980, 2020, by = 5)) +  # Muestra solo años de 10 en 10 desde 1980 a 2020
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12)  # Ajusta el tamaño del texto de los ejes
+  )
+```
+
+-   **Evolución de los tipos de cambio**
+
+Los tipos de cambio de Nueva Zelanda han fluctuado debido a factores
+internos y externos, incluyendo las políticas monetarias y las
+condiciones económicas globales.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=5, fig.align='center'}
+tc <- read_excel("tc.xls")
+ggplot(tc, aes(x = año, y = tc)) +
+  geom_line(color = "black", size = 1) +   # Para crear una línea azul que conecte los puntos
+  geom_point(color = "blue", size = 2) +  # Para añadir puntos rojos en los datos
+  labs(title = "Tipo de Cambio", 
+       x = "Año", 
+       y = " ") +
+  scale_x_continuous(breaks = seq(1910, 2020, by = 5)) +  # Muestra solo años de 10 en 10 desde 1980 a 2020
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12))  # Ajusta el tamaño del texto de los ejes
+```
+
+El tipo de cambio de Nueva Zelanda fue especialmente volátil durante los
+periodos de crisis. La flotación del dólar neozelandés en 1985 fue un
+hito que permitió una mayor flexibilidad en la política monetaria. La
+estructura del comercio se diversifica con el tiempo, reduciendo la
+dependencia de mercados tradicionales como el Reino Unido y
+expandiéndose hacia Asia y otros mercados emergentes.
+
+-   **Tratados de libre comercio**
+
+Nueva Zelanda ha firmado varios tratados de libre comercio que han sido
+cruciales para su crecimiento económico y la diversificación de sus
+mercados de exportación.
+
+La estructura de intercambio comercial de Nueva Zelanda ha evolucionado
+considerablemente desde los años 80. La economía ha diversificado sus
+exportaciones e importaciones, firmando varios tratados de libre
+comercio y expandiendo sus mercados
+
+## Balance fiscal, deuda y riesgo país
+
+-   **Balance Fiscal**
+
+El balance fiscal se refiere a la diferencia entre los ingresos y los
+gastos del gobierno. Un balance fiscal positivo indica que los ingresos
+del gobierno superan los gastos, mientras que un balance negativo indica
+lo contrario.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=5, fig.align='center'}
+bf <- read_excel("bf.xls")
+ggplot(bf, aes(x = año, y = bf)) +
+  geom_line(color = "black", size = 1) +   # Para crear una línea azul que conecte los puntos
+  geom_point(color = "blue", size = 2) +  # Para añadir puntos rojos en los datos
+  labs(title = "Balanza Fiscal", 
+       x = "Año", 
+       y = " US Millones ") +
+  scale_x_continuous(breaks = seq(1980, 2020, by = 5)) +  # Muestra solo años de 10 en 10 desde 1980 a 2020
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12))  # Ajusta el tamaño del texto de los ejes
+```
+
+El balance fiscal de Nueva Zelanda se deterioró significativamente
+durante las décadas de 1970 y 1980, con crecientes déficits y una deuda
+pública en aumento. La consolidación fiscal en las décadas siguientes
+fue crucial para estabilizar la economía y reducir el riesgo país. Las
+políticas fiscales disciplinadas y las reformas estructurales ayudaron a
+restaurar la confianza en los mercados financieros. El balance fiscal de
+Nueva Zelanda se deterioró significativamente en los años 1970 y 1980,
+con crecientes déficits y una deuda pública en aumento. Las políticas
+fiscales expansivas y la dependencia de préstamos externos aumentaron el
+riesgo país durante estos periodos.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=5, fig.align='center'}
+ggplot(deuda_gob, aes(x = año, y = deuda)) +
+  geom_line(color = "black", size = 1) +   # Para crear una línea azul que conecte los puntos
+  geom_point(color = "blue", size = 2) +  # Para añadir puntos rojos en los datos
+  labs(title = "Deuda del Gobierno", 
+       x = "Año", 
+       y = "% PIB ") +
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12)  # Ajusta el tamaño del texto de los ejes
+  )
+```
+
+La deuda pública ha aumentado en periodos de crisis debido a los
+esfuerzos de estímulo económico, pero ha sido manejada de manera
+prudente en tiempos de crecimiento económico. El riesgo país refleja la
+percepción de los inversores sobre la estabilidad económica y política
+de Nueva Zelanda. La gestión prudente de la deuda y el balance fiscal ha
+contribuido a mantener un bajo nivel de riesgo país.
+
+## Cuenta corriente
+
+El saldo de la cuenta corriente de Nueva Zelanda ha sido
+tradicionalmente deficitario, reflejando la dependencia de las
+importaciones y la vulnerabilidad a los choques externos. Los
+desequilibrios en la cuenta corriente fueron exacerbados por las
+fluctuaciones en los términos de intercambio y los altos niveles de
+endeudamiento externo. El déficit de la cuenta corriente fue un problema
+persistente, exacerbado por las fluctuaciones en los términos de
+intercambio y los choques en los precios de los productos básicos.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=4, fig.align='center'}
+
+cta_cor <- read_excel("cta cor.xls")
+
+ggplot(cta_cor, aes(x = año, y = cta)) +
+  geom_line(color = "black", size = 1) +   # Para crear una línea azul que conecte los puntos
+  geom_point(color = "blue", size = 2) +  # Para añadir puntos rojos en los datos
+  labs(title = "Cuenta Corriente", 
+       x = "Año", 
+       y = "% PIB ") +
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12)  # Ajusta el tamaño del texto de los ejes
+  )
+```
+
+## Análisis de la evolución de las tasas de interés
+
+Las tasas de interés en Nueva Zelanda han seguido un patrón cíclico,
+influenciadas por las políticas monetarias y las condiciones económicas
+internas y externas. Durante los periodos de alta inflación, las tasas
+de interés se mantuvieron elevadas para controlar los precios, mientras
+que en periodos de desaceleración económica, las tasas se redujeron para
+estimular el crecimiento.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=4, fig.align='center'}
+
+ti <- read_excel("ti.xlsx")
+ti$año <- as.numeric(as.character(ti$año))
+
+# Crea el gráfico con los ajustes solicitados
+ggplot(ti, aes(x = año, y = ti)) +
+  geom_line(color = "black", size = 1) +   # Para crear una línea negra que conecte los puntos
+  geom_point(color = "blue", size = 2) +  # Para añadir puntos azules en los datos
+  labs(title = "Tasa de interés", 
+       x = "Año", 
+       y = "%") +
+  scale_x_continuous(breaks = seq(1980, 2020, by = 10)) +  # Muestra solo años de 10 en 10 desde 1980 a 2020
+  scale_y_continuous(labels = comma) +  # Formatea los valores del eje Y
+  theme_minimal() +  # Tema minimalista para una mejor visualización
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold"),  # Centra y estiliza el título
+    axis.title.x = element_text(size = 14),  # Ajusta el tamaño del título del eje X
+    axis.title.y = element_text(size = 14),  # Ajusta el tamaño del título del eje Y
+    axis.text = element_text(size = 12)  # Ajusta el tamaño del texto de los ejes
+  )
+```
+
+Las tasas de interés en Nueva Zelanda fueron altas durante los periodos
+de alta inflación, reflejando los esfuerzos del banco central para
+controlar la inflación y estabilizar la economía.
+
+Las tasas de interés han sido utilizadas como una herramienta clave por
+el Banco de Reserva de Nueva Zelanda para influir en la inflación y la
+actividad económica. Durante la pandemia de COVID-19, las tasas de
+interés se redujeron a niveles históricamente bajos para estimular la
+economía.
+
+Las tasas de interés son un instrumento crucial de la política
+monetaria, influenciando la inversión, el consumo y la estabilidad
+financiera.
+
+-   Años 80 y 90: Las tasas de interés eran relativamente altas para
+    controlar la inflación y estabilizar la economía.
+-   Crisis Financiera Global (2008-2009): El Banco de Reserva de Nueva
+    Zelanda redujo significativamente las tasas de interés para
+    estimular la economía.
+-   Pandemia de COVID-19 (2020-2021): Las tasas de interés se
+    mantuvieron bajas para apoyar la recuperación económica.
+
+## Última crisis
+
+Durante las últimas crisis económicas, Nueva Zelanda implementó una
+serie de políticas para estabilizar la economía. Estas incluyeron
+estímulos fiscales, reformas estructurales y políticas monetarias
+expansivas.
+
+La respuesta a la crisis financiera global de 2008-2009, se centró en el
+apoyo a los sectores más afectados y la reactivación del crecimiento
+económico a través de inversiones en infraestructura y la reducción de
+tasas de interés. Durante las crisis, Nueva Zelanda implementó diversas
+políticas económicas, incluyendo ajustes fiscales y monetarios, reformas
+estructurales y liberalización económica para estabilizar y revitalizar
+la economía.
+
+Durante la pandemia de COVID-19, Nueva Zelanda implementó una serie de
+políticas fiscales y monetarias expansivas, incluyendo subsidios
+salariales, apoyo a las empresas y programas de compra de activos. Estas
+medidas fueron efectivas para mitigar los efectos económicos de la
+pandemia y facilitar una recuperación rápida y robusta.
+
+Las políticas implementadas demostraron ser efectivas en mantener la
+estabilidad económica, reducir la tasa de desempleo y controlar la
+inflación, contribuyendo a una recuperación económica sostenida
+
+## Funcionamiento de la economía y las políticas económicas que se implementaron.
+
+La economía de Nueva Zelanda ha mostrado una notable capacidad de
+adaptación frente a las crisis económicas. Las políticas económicas
+implementadas, que han causado momentos dificiles en el corto plazo, han
+sentado las bases para un crecimiento sostenido y una mayor estabilidad
+macroeconómica. La diversificación de la economía y la apertura a los
+mercados internacionales han sido fundamentales para este proceso.
+
+Las políticas económicas en Nueva Zelanda han evolucionado desde el
+control estatal hacia una mayor liberalización y apertura al comercio
+internacional. Aunque estas políticas han tenido éxito en diversificar
+la economía y promover el crecimiento, también han enfrentado desafíos
+significativos durante los periodos de crisis.
+
+# Análisis del modelo de desarrollo económico
+
+El modelo de desarrollo económico de Nueva Zelanda ha sido caracterizado
+por una combinación de reformas estructurales, políticas fiscales y
+monetarias prudentes, y una integración significativa en la economía
+global. El análisis pick to trough del PIB refleja cómo este modelo ha
+permitido a Nueva Zelanda enfrentar y recuperarse de diversas crisis
+económicas, incluyendo la reciente pandemia de COVID-19.
+
+## Estructura institucional
+
+Nueva Zelanda ha desarrollado una estructura institucional que favorece
+la estabilidad macroeconómica, la apertura comercial y la inversión en
+capital humano. Estas instituciones han sido cruciales para soportar el
+crecimiento económico a largo plazo.
+
+### Políticas
+
+-   **Banco de Reserva de Nueva Zelanda** El Banco de Reserva de Nueva
+    Zelanda es una institución independiente responsable de la política
+    monetaria, la estabilidad financiera y la emisión de moneda. Su
+    mandato principal es mantener la estabilidad de precios y, desde
+    2018, también contribuir al máximo empleo sostenible.
+
+-   **Política Monetaria** El Banco de Reserva de Nueva Zelanda utiliza
+    herramientas como la tasa de interés para influir en la inflación y
+    la actividad económica.Durante la pandemia de COVID-19, el Banco
+    redujo las tasas de interés a niveles bajos e implementó programas
+    de compra de activos para inyectar liquidez en la economía.
+
+-   **Tesoro de Nueva Zelanda** El Tesoro de Nueva Zelanda es
+    responsable de la gestión de las finanzas públicas y la formulación
+    de políticas fiscales. El enfoque en la responsabilidad fiscal ha
+    llevado a un manejo prudente de la deuda pública y la implementación
+    de superávits fiscales en tiempos de crecimiento económico para
+    prepararse para posibles crisis.
+
+-   **Políticas Fiscales** El gobierno ha utilizado políticas fiscales
+    expansivas en tiempos de crisis, como durante la pandemia de
+    COVID-19, para apoyar la demanda agregada y mantener la estabilidad
+    económica. Los paquetes de estímulo económico, incluyendo subsidios
+    salariales y apoyo a las empresas, fueron cruciales para mitigar los
+    efectos económicos de la pandemia.
+
+### Ministerios Sectoriales y Agencias Reguladoras
+
+-   **Desarrollo Económico y Comercio**
+
+1.  El Ministerio de Negocios, Innovación y Empleo (MBIE) juega un papel
+    crucial en el desarrollo económico, la regulación del mercado
+    laboral y la promoción de la innovación.
+
+2.  El Ministerio de Comercio y Exportación trabaja para mejorar las
+    relaciones comerciales internacionales y promover las exportaciones
+    neozelandesas.
+
+-   **Regulación y Competencia**
+
+1.  La Comisión de Comercio de Nueva Zelanda supervisa la competencia en
+    el mercado y regula las prácticas comerciales para asegurar un
+    entorno competitivo y justo.
+
+2.  Las agencias regulatorias, como la Autoridad de Mercados Financieros
+    (FMA), aseguran la estabilidad y transparencia en los mercados
+    financieros.
+
+### Política de Bienestar y Educación
+
+-   ***Sistema de Bienestar***
+
+1.  Nueva Zelanda tiene un sistema de bienestar social robusto que
+    proporciona apoyo a los ciudadanos en términos de salud, educación y
+    seguridad social.
+
+2.  Durante la pandemia de COVID-19, el sistema de bienestar se expandió
+    para incluir subsidios adicionales y apoyo financiero a los
+    ciudadanos afectados.
+
+-   ***Inversión en Educación***
+
+1.  La inversión en educación ha sido una prioridad, con un enfoque en
+    mejorar las habilidades y la capacitación de la fuerza laboral para
+    adaptarse a las demandas de una economía globalizada.
+
+2.  Las políticas educativas han promovido la inclusión y el acceso a la
+    educación superior, fomentando una fuerza laboral altamente
+    calificada.
+
+### Tratados de Libre Comercio y Relaciones Internacionales
+
+-   ***Integración Económica Global***
+
+1.  Nueva Zelanda ha firmado varios tratados de libre comercio que han
+    facilitado el acceso a mercados internacionales y diversificado las
+    exportaciones.
+
+2.  Los acuerdos con China, ASEAN y el CPTPP han sido particularmente
+    importantes para expandir las oportunidades comerciales y fortalecer
+    las relaciones económicas.
+
+-   ***Promoción de Exportaciones***
+
+1.  Las agencias gubernamentales, como New Zealand Trade and Enterprise
+    (NZTE), trabajan para promover las exportaciones y apoyar a las
+    empresas neozelandesas en el mercado global.
+
+2.  Las políticas comerciales se han enfocado en diversificar los
+    mercados de exportación para reducir la dependencia de unos pocos
+    socios comerciales.
+
+Algunos ejemplos de entidades neozelandesas que tienen convenio con el
+gobierno, con el fin de potenciar la innovación y el crecimiento
+económico son:
+
+Callaghan Innovation, establecida en 2013, creada con el fin de
+    proporcionar un enfoque más cohesivo y dirigido a la innovación e
+    investigación y desarrollo. Con programas de financiamiento,
+    desarrollo de servicios de asesoramiento tecnológico y
+    facilitaciones para colaboraciones con empresas pública y privadas,
+    además de apoyo a Startups y emprendedores. Esto puede asemejarse a
+    los programas como Innova o Semilla, de la Corfo acá en Chile, solo
+    que, con un enfoque nacional general, y no con el fin de
+    descentralizar el país.
+
+-   Además, cabe destacar que establecieron un espacio físico llamado
+    Gracefield Innovation Quarter, que es el equivalente a un parque que
+    alberga laboratorios, talleres y oficinas para empresas que se
+    dedican a realizar procesos con alta tecnología, junto a la búsqueda
+    de fomentar la colaboración e intercambio de conocimientos entre
+    científicos e investigadores, por y entre empresas.
+
+-   Por último, hay que mencionar que fueron líderes en proyectos de
+    suma importancia para la innovación del país junto a un crecimiento
+    económico significativo, fomentando la tecnología agrícola y médica,
+    manteniendo como premisa la sostenibilidad ambiental. 
+
+New Zealand Trade & Enterprise, agencia gubernamental que nació de la fusión de
+    dos entidades distintas que se dedicaban a los negocios en 2003.
+    Enfocados principalmente a mercados internacionales y la búsqueda de
+    inversión extranjera.
+
+-  Dicho lo anterior, la clave era lo internacional, ya que con programas
+como Beachheads que buscaba ayudar a empresas de alto crecimiento,
+proporcionando investigadores y expertos en negocios globales.
+Establecimiento de oficinas en todo el mundo para brindar apoyo a las
+empresas neozelandesas que quisieran adentrarse en un país extranjero
+para llevar a cabo sus negocios. Ya más cerca del período de la
+pandemia, NZTE buscó apoyar a las empresas nacionales, con recursos y
+estrategias para enfrentarse a los desafíos que ésta suponía. Paquetes
+con subvenciones, asesoramiento gratuito, fomento de tecnologías
+digitales y comercio electrónico, y un fuerte intento por lograr que las
+empresas se adaptaran al eCommerce como tal, y hacer menos estrictas las
+restricciones para que hubiera más movimiento a domicilio por parte de
+los productores que lo necesitaran.
+
+-  La estructura institucional de Nueva Zelanda ha sido fundamental para
+sostener su modelo de crecimiento económico. Las instituciones
+independientes y responsables, como el Banco de Reserva de Nueva Zelanda
+y el Tesoro, han implementado políticas prudentes y efectivas para
+manejar las crisis económicas y fomentar el crecimiento sostenible. Las
+reformas estructurales, la promoción de la innovación y la integración
+económica global han permitido a Nueva Zelanda adaptarse y prosperar en
+un entorno económico global dinámico. El enfoque en la responsabilidad
+fiscal, la estabilidad monetaria y el bienestar social ha creado una
+base sólida para el desarrollo económico a largo plazo.
+
+## Modelo de crecimiento
+
+El modelo de crecimiento económico neoclásico se basa en la acumulación
+de factores de producción como el capital y el trabajo, así como en la
+mejora de la productividad total de los factores (PTF). A continuación,
+se analiza la evolución económica de Nueva Zelanda desde esta
+perspectiva, centrándonos en la productividad del trabajo, el capital
+per cápita y la productividad total de los factores.
+
+### Modelo Neoclásico
+
+Desde una perspectiva neoclásica, el crecimiento económico de Nueva
+Zelanda ha sido impulsado por la acumulación de capital, el aumento de
+la productividad laboral y la eficiencia en la asignación de recursos.
+Las reformas estructurales de las décadas de 1980 y 1990 mejoraron la
+competitividad y la productividad total de los factores.
+
+-   ***Productividad del Trabajo***
+
+La productividad del trabajo se refiere a la cantidad de output
+producido por cada unidad de trabajo. Es un indicador clave de la
+eficiencia y la competitividad de la economía.
+
+**Evolución de la Productividad del Trabajo:**
+
+1.  Años 80 y 90: Nueva Zelanda implementó reformas estructurales
+    significativas que incluyeron la desregulación de mercados y la
+    liberalización del comercio. Estas reformas impulsaron la
+    productividad del trabajo al hacer que los mercados laborales fueran
+    más flexibles y competitivos.
+
+2.  2000s: La economía neozelandesa continuó beneficiándose de las
+    reformas anteriores, con un crecimiento sostenido en la
+    productividad del trabajo. La adopción de nuevas tecnologías y la
+    inversión en capital humano también contribuyeron a este aumento.
+
+-   ***Capital per Cápita***
+
+El capital per cápita se refiere a la cantidad de capital disponible por
+cada trabajador. Aumentar el capital per cápita generalmente mejora la
+productividad, ya que los trabajadores tienen más herramientas y
+recursos a su disposición.
+
+**Evolución del Capital per Cápita:**
+
+1.  Años 80 y 90: Las reformas estructurales atrajeron inversión tanto
+    nacional como extranjera, aumentando el stock de capital.
+
+2.  Inversiones en Infraestructura: La inversión en infraestructura
+    pública y privada, incluyendo transporte, energía y tecnología, ha
+    incrementado el capital per cápita.
+
+3.  Adopción de Tecnologías Avanzadas: Las empresas neozelandesas han
+    adoptado tecnologías avanzadas, mejorando la eficiencia y la
+    capacidad productiva.
+
+4.  Inversión Extranjera Directa (IED): La apertura a la inversión
+    extranjera ha facilitado la transferencia de tecnología y capital,
+    aumentando el capital per cápita.
+
+5.  Stock de Capital: Indicadores como la inversión en maquinaria y
+    equipo y la infraestructura pública han mostrado un crecimiento
+    significativo.
+
+-   ***Productividad Total de los Factores***
+
+La productividad total de los factores mide la eficiencia con la que se
+utilizan todos los factores de producción (trabajo y capital) en la
+economía. Es un indicador clave de la innovación, la eficiencia
+tecnológica y la calidad de las instituciones.
+
+**Evolución de la PTF:**
+
+1.  Años 80 y 90: Las reformas estructurales y la liberalización del
+    mercado mejoraron la eficiencia y la competitividad, impulsando la
+    PTF.
+
+2.  Innovación y Tecnología: La adopción de nuevas tecnologías y la
+    innovación han sido motores clave del crecimiento de la PTF.
+
+3.  Educación y Capacitación: La inversión en educación y la mejora de
+    las habilidades de la fuerza laboral han contribuido al aumento de
+    la PTF.
+
+4.  Instituciones Sólidas: La existencia de instituciones fuertes y
+    transparentes ha creado un entorno favorable para los negocios y la
+    inversión, mejorando la eficiencia económica.
+
+5.  Crecimiento de la PTF: Indicadores como el crecimiento del PIB
+    ajustado por el crecimiento de los insumos de trabajo y capital
+    muestran un aumento constante de la PTF.
+
+6.  Eficiencia y Competitividad: Indicadores de competitividad global y
+    eficiencia del mercado reflejan mejoras en la PTF.
+
+Desde la perspectiva neoclásica, el modelo de crecimiento económico de
+Nueva Zelanda ha sido exitoso en aumentar la productividad del trabajo,
+el capital per cápita y la productividad total de los factores. Las
+reformas estructurales, la inversión en capital humano y tecnológico, y
+la creación de instituciones sólidas han sido fundamentales para este
+éxito. La capacidad de adaptarse a las condiciones económicas cambiantes
+y la adopción de políticas prudentes han permitido a Nueva Zelanda
+mantener un crecimiento sostenido y una economía resiliente frente a las
+crisis.
+
+### Lógica Schumpeteriana.
+
+La lógica schumpeteriana se centra en la innovación y el emprendimiento
+como motores del crecimiento económico, caracterizada por un proceso de
+"destrucción creativa" donde nuevas industrias surgen y reemplazan a las
+antiguas. A continuación, se analiza la evolución económica de Nueva
+Zelanda desde esta perspectiva, identificando fases de creación y
+destrucción de industrias, el estado de la innovación y tecnología, y
+los cambios estructurales en la matriz productiva del país.
+
+Desde la perspectiva Schumpeteriana, Nueva Zelanda ha experimentado
+varias fases de destrucción creativa, donde las industrias tradicionales
+han sido reemplazadas por sectores más innovadores y tecnológicos. La
+adopción de nuevas tecnologías y la promoción de la innovación han sido
+claves para la transformación económica del país.
+
+-   ***Fases de Creación y Destrucción de Industrias***
+
+**Años 80 y 90**
+
+1.  Destrucción de Industrias Tradicionales: Las reformas económicas de
+    los años 80 llevaron a la liberalización del mercado y la
+    eliminación de subsidios a industrias tradicionales como la
+    agricultura y la manufactura protegida. Esto resultó en la
+    desaparición de empresas ineficientes.
+
+2.  Creación de Nuevas Industrias: La desregulación y la apertura de la
+    economía permitieron el surgimiento de nuevas industrias,
+    especialmente en los sectores de servicios financieros y tecnología.
+    La agricultura se reestructuró para volverse más competitiva en el
+    mercado global.
+
+**2000**
+
+1.  Expansión de la Tecnología y Servicios: La década de los 2000 vio
+    una expansión significativa en los sectores de tecnología de la
+    información, servicios financieros y turismo. La adopción de
+    tecnologías avanzadas y el aumento del comercio electrónico fueron
+    claves en esta fase.
+
+2.  Declive de la Manufactura Tradicional: La manufactura tradicional
+    continuó disminuyendo en importancia relativa, reemplazada por
+    sectores más avanzados tecnológicamente.
+
+-   ***Estado de la Innovación y Tecnología***
+
+Nueva Zelanda ha fomentado un entorno favorable para la innovación y la
+tecnología, lo que ha sido crucial para su desarrollo económico.
+
+**Políticas de Innovación**
+
+1.  Apoyo a Startups y PYMEs: El gobierno ha implementado programas para
+    apoyar a startups y pequeñas y medianas empresas (PYMEs), incluyendo
+    financiación, incubadoras y aceleradoras.
+
+2.  Incentivos Fiscales: Se han ofrecido incentivos fiscales para la
+    investigación y el desarrollo (I+D), promoviendo la innovación en
+    diversos sectores.
+
+3.  Infraestructura Digital: Inversiones significativas en
+    infraestructura digital, incluyendo redes de banda ancha de alta
+    velocidad y tecnologías móviles avanzadas.
+
+4.  Sector Tecnológico en Crecimiento: El sector tecnológico ha crecido
+    rápidamente, con empresas emergentes en software, biotecnología y
+    fintech.
+
+**Educación y Capacitación**
+
+1.  Programas Educativos: La mejora en la educación y la capacitación de
+    la fuerza laboral en habilidades tecnológicas y digitales ha sido
+    una prioridad.
+
+2.  Colaboración entre Universidades y Empresas: Las colaboraciones
+    entre universidades y el sector privado han facilitado la
+    transferencia de tecnología y la innovación.
+
+***Cambios Estructurales en la Matriz Productiva del País***
+
+Nueva Zelanda ha experimentado cambios estructurales significativos en
+las últimas décadas, reflejando el proceso de destrucción creativa.
+
+**Diversificación Económica**
+
+1.  De la Agricultura a los Servicios: Aunque la agricultura sigue
+    siendo importante, ha habido una diversificación significativa hacia
+    los sectores de servicios y tecnología.
+
+2.  Turismo y Educación: El turismo y la educación internacional se han
+    convertido en importantes generadores de ingresos.
+
+**Transformación de la Agricultura**
+
+1.  Agricultura Sostenible y Tecnológica: La agricultura se ha
+    modernizado, adoptando prácticas sostenibles y tecnologías avanzadas
+    para aumentar la eficiencia y reducir el impacto ambiental.
+
+2.  Exportaciones de Valor Agregado: Mayor enfoque en productos
+    agrícolas de valor agregado y en la diversificación de mercados de
+    exportación.
+
+**Sector Tecnológico y de Servicios**
+
+1.  Crecimiento del Sector Tecnológico: El sector tecnológico ha crecido
+    rápidamente, contribuyendo significativamente al PIB y al empleo.
+
+2.  Servicios Financieros y Profesionales: Los servicios financieros y
+    profesionales se han expandido, beneficiándose de la liberalización
+    del mercado y la adopción de tecnologías avanzadas.
+
+Desde la lógica schumpeteriana, el modelo de desarrollo económico de
+Nueva Zelanda ha sido marcado por un proceso continuo de destrucción
+creativa, donde industrias tradicionales han sido reemplazadas por
+sectores más innovadores y tecnológicamente avanzados. Las políticas de
+apoyo a la innovación, la inversión en tecnología y la mejora de la
+educación y la capacitación han sido fundamentales para este proceso.
+Los cambios estructurales en la matriz productiva han diversificado la
+economía, aumentando su resiliencia y capacidad de adaptación a las
+condiciones económicas globales. La facilidad para hacer negocios en
+Nueva Zelanda, junto con su entorno regulatorio favorable y
+transparente, ha fomentado un crecimiento económico sostenido y un
+entorno atractivo para la inversión.
+
+### Enfermedad Holandesa
+
+La economía de Nueva Zelanda ha mostrado características de la
+enfermedad holandesa, especialmente durante los períodos de auge en las
+exportaciones de productos básicos. La apreciación de la moneda y el
+impacto negativo en otros sectores exportadores fueron evidentes. Sin
+embargo, las políticas de diversificación y el enfoque en la innovación
+ayudaron a mitigar estos efectos.
+
+La enfermedad holandesa es un fenómeno económico en el cual un aumento
+significativo en los ingresos de un país debido a la explotación de
+recursos naturales, como el petróleo o los minerales, resulta en la
+apreciación de la moneda local. Esto puede llevar a una pérdida de
+competitividad en otros sectores exportadores, como la manufactura y la
+agricultura, debido al aumento de los costos relativos. Para analizar si
+Nueva Zelanda ha experimentado la enfermedad holandesa, debemos observar
+si el país ha tenido dependencia de los recursos raturales, la moneda se
+ha apreciado y el impacto que ha generado la posible competitividad de
+otros sectores.
+
+-   ***Dependencia de los Recursos Naturales***
+
+Nueva Zelanda es conocida por su rica base de recursos naturales,
+especialmente en la agricultura y la producción de lácteos. Sin embargo,
+a diferencia de países que experimentan la enfermedad holandesa debido a
+recursos como el petróleo, Nueva Zelanda no ha tenido un recurso
+dominante que cause un aumento repentino y masivo en los ingresos.
+
+**Agricultura y Lácteos**
+
+1.  La agricultura y la producción de lácteos han sido pilares de la
+    economía de Nueva Zelanda desde hace décadas. Estos sectores han
+    proporcionado ingresos estables y han sido bien gestionados.
+
+2.  No ha habido una "explosión" de ingresos debido a la explotación de
+    recursos, como se ve en el caso típico de la enfermedad holandesa.
+
+**Minería**
+
+1.  La minería es una industria importante, pero no ha sido lo
+    suficientemente dominante como para causar la enfermedad holandesa.
+    La contribución de la minería al PIB ha sido modesta en comparación
+    con la agricultura y los servicios.
+
+-   ***Apreciación de la Moneda***
+
+La apreciación de la moneda es una característica clave de la enfermedad
+holandesa. Si bien el dólar neozelandés ha experimentado apreciaciones y
+depreciaciones a lo largo de los años, estos movimientos han estado más
+relacionados con factores económicos globales y políticas monetarias que
+con un aumento repentino en los ingresos por recursos naturales.
+
+1.  Política Monetaria: Las decisiones del Banco de Reserva de Nueva
+    Zelanda han influido significativamente en el valor del NZD.
+
+2.  Condiciones Económicas Globales: La demanda global de productos
+    agrícolas y lácteos de Nueva Zelanda ha influido en la valoración
+    del NZD.
+
+3.  Crisis Económicas: Durante la crisis financiera global y la pandemia
+    de COVID-19, el NZD se depreció debido a la incertidumbre económica.
+
+-   ***Competitividad de Sectores Diversos***
+
+Una consecuencia de la enfermedad holandesa es la pérdida de
+competitividad en sectores no relacionados con los recursos naturales
+debido a la apreciación de la moneda y el aumento de los costos.
+
+1.  Agricultura y Manufactura: La agricultura ha mantenido su
+    competitividad global, en parte gracias a la innovación y la
+    adopción de prácticas sostenibles. La manufactura ha enfrentado
+    desafíos, pero esto se debe más a la competencia global que a la
+    apreciación del NZD.
+
+2.  Servicios: El sector de servicios, especialmente el turismo,
+    educación y tecnología, ha crecido significativamente. La
+    diversificación económica ha sido una estrategia clave para mantener
+    la competitividad global.
+
+**Ausencia de un Recurso Dominante**
+
+1.  Nueva Zelanda no ha tenido un recurso natural dominante cuya
+    explotación haya llevado a una apreciación significativa de la
+    moneda y a la enfermedad holandesa.
+
+2.  La economía ha sido diversificada, con importantes contribuciones de
+    la agricultura, manufactura y servicios.
+
+**Política Económica Prudente**
+
+1.  Las políticas fiscales y monetarias prudentes han ayudado a evitar
+    la apreciación excesiva del NZD.
+
+2.  La diversificación de los mercados de exportación y la adopción de
+    tratados de libre comercio han ayudado a mantener la competitividad.
+
+**Innovación y Tecnología**
+
+1.  La inversión en innovación y tecnología ha mejorado la eficiencia y
+    la productividad en varios sectores, ayudando a mantener la
+    competitividad en el mercado global.
+
+# Conclusión
+
+El análisis del PIB de Nueva Zelanda entre 1985 y 2024 muestra una
+economía resiliente que ha enfrentado y superado varios desafíos,
+incluyendo la crisis financiera global y la pandemia de COVID-19. El
+crecimiento del PIB, junto con una inflación controlada y una tasa de
+desempleo en descenso, indican una recuperación económica sólida. Las
+fluctuaciones en la inversión extranjera directa y el gasto del gobierno
+reflejan las respuestas políticas a las condiciones económicas
+cambiantes. En general, Nueva Zelanda ha demostrado una capacidad
+notable para adaptarse y crecer en un entorno económico global dinámico.
+
+En conclusión, el desarrollo económico de Nueva Zelanda ha sido el
+resultado de una serie de reformas estructurales, políticas económicas
+prudentes y una capacidad notable para adaptarse a las condiciones
+cambiantes del entorno global. Aunque ha enfrentado desafíos
+significativos, las lecciones aprendidas y las políticas implementadas
+han permitido a Nueva Zelanda no solo recuperarse de las crisis
+económicas, sino también sentar las bases para un crecimiento sostenible
+y equitativo a largo plazo. . La economía diversificada, las políticas
+económicas prudentes y el enfoque en la innovación y la tecnología han
+permitido al país mantener su competitividad global. La gestión eficaz
+de los recursos naturales y la diversificación hacia sectores de
+servicios y tecnología han sido claves para contrarrestar los efectos
+negativos asociados con la enfermedad holandesa.
+
+# Bibliografia
+
+-   <https://www.callaghaninnovation.govt.nz>
+
+-   <https://www.nzte.govt.nz>
+
+-   OECD (1999), OECD economic survey: New Zealand, 1999, OECD, Paris.
+
+-   National Bank of New Zealand (1998), ‘Household savings and wealth –
+    a background’ Working Paper 98/1.
+
+-   OECD (1998), Human capital investment: An international comparison,
+    Centre for education research and innovation, OECD.
